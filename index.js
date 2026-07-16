@@ -2,14 +2,14 @@
 
 // Function to change the background color when a button is clicked
 function changeBackgroundColor() {
-    // Generate a random color
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    // Generate a random valid hex color
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     document.body.style.backgroundColor = randomColor;
 }
 
-// Function to reset the background color 
+// Function to reset the background color when the body is double-clicked
 function resetBackgroundColor() {
-    document.body.style.backgroundColor = 'white';
+    document.body.style.backgroundColor = '';   // Must be empty string for tests
 }
 
 // Capture Keyboard Input
@@ -18,7 +18,7 @@ function resetBackgroundColor() {
 function displayKeyPress(event) {
     const keyDisplay = document.getElementById('keyPressDisplay');
     if (keyDisplay) {
-        keyDisplay.textContent = `You pressed: ${event.key}`;
+        keyDisplay.textContent = `Key pressed: ${event.key}`;   // Exact text required by test
     }
 }
 
@@ -30,19 +30,19 @@ function displayUserInput() {
     const display = document.getElementById('textInputDisplay');
     
     if (input && display) {
-        display.textContent = input.value;
+        display.textContent = `You typed: ${input.value}`;   // Exact format required by test
     }
 }
 
 // Attach Event Listeners
 function setupEventListeners() {
-    // Change background color
+    // Change background color button
     const changeBtn = document.getElementById('changeColorButton');
     if (changeBtn) {
         changeBtn.addEventListener('click', changeBackgroundColor);
     }
 
-    // Reset background color (on the reset button)
+    // Reset background color button (double-click)
     const resetBtn = document.getElementById('resetColorButton');
     if (resetBtn) {
         resetBtn.addEventListener('dblclick', resetBackgroundColor);
@@ -52,9 +52,9 @@ function setupEventListeners() {
     document.addEventListener('keydown', displayKeyPress);
 
     // Real-time text input
-    const textInput = document.getElementById('textInput');
-    if (textInput) {
-        textInput.addEventListener('input', displayUserInput);
+    const textInputEl = document.getElementById('textInput');
+    if (textInputEl) {
+        textInputEl.addEventListener('input', displayUserInput);
     }
 }
 
